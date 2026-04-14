@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>125 Million — What It Costs the Filipino People</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=IBM+Plex+Mono:wght@300;400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --red-dim: #7d1f17;
+    --white: #f5f0e8;
+    --off-white: #d9d3c7;
+    --dark: #0a0a0a;
+    --dark-mid: #111111;
+    --dark-surface: #161616;
+    --gray: #4a4a4a;
+    --gray-light: #888;
+    --accent-gold: #b8962e;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: #ffffff;
+    color: var(--dark);
+    font-family: 'Libre Baskerville', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── INTRO OVERLAY ── */
+  #intro {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+  }
+
+  .intro-slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+
+  .intro-slide.active { opacity: 1; }
+
+  #slide-1 { background: #ffffff; }
+  #slide-2 { background: #0a0a0a; }
+  #slide-3 { background: #0a0a0a; }
+
+  .slide-date {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+  }
+
+  .slide-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.5;
+    text-align: center;
+    max-width: 780px;
+    color: var(--dark);
+  }
+
+  .slide-headline.light { color: var(--white); }
+
+  .slide-headline em {
+    font-style: italic;
+    color: var(--red);
+  }
+
+  .slide-sub {
+    margin-top: 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: var(--gray);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .slide-sub.light { color: var(--gray-light); }
+
+  .amount-display {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    color: var(--red);
+    line-height: 1;
+    margin: 1.5rem 0;
+    letter-spacing: -0.02em;
+  }
+
+  #slide-3 .message {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.2rem, 3.5vw, 2.2rem);
+    font-style: italic;
+    color: var(--white);
+    text-align: center;
+    max-width: 640px;
+    line-height: 1.6;
+  }
+
+  #slide-3 .message strong {
+    font-style: normal;
+    color: var(--red);
+    font-weight: 900;
+  }
+
+  .skip-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 10000;
+    background: transparent;
+    border: 1px solid rgba(150,150,150,0.4);
+    color: #888;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: none;
+  }
+  .skip-btn:hover { border-color: var(--red); color: var(--red); }
+  .skip-btn.visible { display: block; }
+
+  /* ── MAIN SITE ── */
+  #main-site {
+    display: none;
+    background: var(--dark);
+    color: var(--white);
+    min-height: 100vh;
+  }
+
+  /* HEADER */
+  .site-header {
+    padding: 3rem 2rem 2rem;
+    border-bottom: 1px solid #222;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .site-header::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 0%, rgba(192,57,43,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .header-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  .header-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    color: var(--white);
+  }
+
+  .header-title span { color: var(--red); }
+
+  .header-sub {
+    margin-top: 1.2rem;
+    font-size: 0.95rem;
+    color: var(--gray-light);
+    font-style: italic;
+    max-width: 600px;
+    margin-inline: auto;
+    line-height: 1.7;
+  }
+
+  .header-divider {
+    width: 60px;
+    height: 2px;
+    background: var(--red);
+    margin: 2rem auto 0;
+  }
+
+  /* TICKER */
+  .ticker-bar {
+    background: var(--red);
+    padding: 0.6rem 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .ticker-track {
+    display: flex;
+    white-space: nowrap;
+    animation: ticker 30s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 0 3rem;
+  }
+
+  .ticker-item::before {
+    content: '▸ ';
+    opacity: 0.6;
+  }
+
+  @keyframes ticker {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* CONTEXT BLOCK */
+  .context-section {
+    max-width: 860px;
+    margin: 5rem auto;
+    padding: 0 2rem;
+    text-align: center;
+  }
+
+  .context-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .context-big {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-weight: 400;
+    line-height: 1.8;
+    color: var(--off-white);
+  }
+
+  .context-big strong { color: var(--white); font-weight: 700; }
+  .context-big em { color: var(--red); font-style: italic; }
+
+  /* DAILY LIFE COMPARISON */
+  .section {
+    padding: 5rem 2rem;
+    position: relative;
+  }
+
+  .section-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #222;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 1rem;
+  }
+
+  .section-title em { color: var(--red); font-style: italic; }
+
+  /* COMPARISON CARDS */
+  .comparison-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5px;
+    margin-top: 3rem;
+    background: #1a1a1a;
+    border: 1px solid #1a1a1a;
+  }
+
+  .comp-card {
+    background: var(--dark-mid);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+  }
+
+  .comp-card:hover { background: #161616; }
+
+  .comp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--red);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.3s ease;
+  }
+
+  .comp-card:hover::before { transform: scaleY(1); }
+
+  .comp-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+    filter: grayscale(0.2);
+  }
+
+  .comp-item {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .comp-cost {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--accent-gold);
+    margin-bottom: 0.3rem;
+  }
+
+  .comp-desc {
+    font-size: 0.85rem;
+    color: var(--off-white);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+  }
+
+  .comp-divider {
+    height: 1px;
+    background: #222;
+    margin: 1rem 0;
+  }
+
+  .comp-reach-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+
+  .comp-reach {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--red);
+    line-height: 1.3;
+  }
+
+  /* THE CLOCK */
+  .clock-section {
+    background: var(--dark-surface);
+    border-top: 1px solid #1c1c1c;
+    border-bottom: 1px solid #1c1c1c;
+    padding: 5rem 2rem;
+  }
+
+  .clock-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .clock-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 900;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+
+  .clock-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+  }
+
+  .clock-display {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: clamp(3rem, 10vw, 7rem);
+    font-weight: 500;
+    color: var(--red);
+    letter-spacing: 0.05em;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+    position: relative;
+    display: inline-block;
+  }
+
+  .clock-display::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--red), transparent);
+  }
+
+  .per-second {
+    margin-top: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
+    color: var(--off-white);
+    font-style: italic;
+  }
+
+  .per-second strong {
+    color: var(--red);
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  .burn-rate-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: #1a1a1a;
+    margin-top: 3rem;
+    border: 1px solid #1a1a1a;
+  }
+
+  @media (max-width: 600px) {
+    .burn-rate-grid { grid-template-columns: 1fr; }
+  }
+
+  .burn-cell {
+    background: var(--dark-mid);
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  .burn-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  .burn-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--red);
+  }
+
+  /* PEOPLE VISUALIZATION */
+  .people-section {
+    padding: 5rem 2rem;
+  }
+
+  .people-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .people-intro {
+    margin-bottom: 3rem;
+  }
+
+  .people-intro p {
+    max-width: 640px;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--off-white);
+    margin-top: 1rem;
+  }
+
+  .vis-block {
+    background: var(--dark-surface);
+    border: 1px solid #1c1c1c;
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .vis-block::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 2px;
+    width: 0%;
+    background: var(--red);
+    transition: width 1.5s ease;
+  }
+
+  .vis-block.in-view::after { width: 100%; }
+
+  .vis-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .vis-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--white);
+  }
+
+  .vis-amount {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.75rem;
+    color: var(--accent-gold);
+    letter-spacing: 0.1em;
+  }
+
+  .vis-bar-wrap {
+    height: 10px;
+    background: #1a1a1a;
+    border-radius: 0;
+    overflow: hidden;
+    margin-bottom: 0.8rem;
+  }
+
+  .vis-bar-fill {
+    height: 100%;
+    background: var(--red);
+    width: 0%;
+    transition: width 1.5s cubic-bezier(0.19,1,0.22,1);
+  }
+
+  .vis-bar-fill.partial { background: var(--accent-gold); }
+
+  .vis-description {
+    font-size: 0.9rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  .vis-description strong { color: var(--white); }
+
+  .person-icons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    margin-top: 1rem;
+    max-height: 120px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .person-icon {
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.05s;
+  }
+
+  .person-icon.show { opacity: 1; }
+
+  /* QUOTE BLOCK */
+  .quote-section {
+    background: var(--red);
+    padding: 5rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .quote-section::before {
+    content: '₱';
+    position: absolute;
+    font-family: 'Playfair Display', serif;
+    font-size: 30rem;
+    font-weight: 900;
+    color: rgba(255,255,255,0.05);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    line-height: 1;
+  }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 3rem);
+    font-weight: 700;
+    font-style: italic;
+    color: #fff;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.4;
+    position: relative;
+  }
+
+  .quote-attr {
+    margin-top: 2rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.25em;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  /* WHAT COULD HAVE BEEN */
+  .what-section {
+    padding: 5rem 2rem;
+    background: var(--dark-mid);
+  }
+
+  .what-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .what-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1px;
+    background: #1a1a1a;
+    margin-top: 3rem;
+    border: 1px solid #1a1a1a;
+  }
+
+  .what-card {
+    background: var(--dark-surface);
+    padding: 2rem 1.5rem;
+    position: relative;
+    overflow: hidden;
+    cursor: default;
+    transition: background 0.2s;
+  }
+
+  .what-card:hover { background: #181818; }
+
+  .what-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .what-emoji {
+    font-size: 2.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .what-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.3;
+  }
+
+  .what-count {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 1.6rem;
+    font-weight: 500;
+    color: var(--red);
+    letter-spacing: -0.02em;
+    margin-bottom: 0.3rem;
+  }
+
+  .what-unit {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+  }
+
+  .what-note {
+    font-size: 0.8rem;
+    color: var(--gray-light);
+    line-height: 1.5;
+    margin-top: 0.8rem;
+  }
+
+  /* DAILY WAGE COMPARISON */
+  .wage-section {
+    padding: 5rem 2rem;
+  }
+
+  .wage-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .wage-vs {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 2rem;
+    margin: 3rem 0;
+  }
+
+  @media (max-width: 600px) {
+    .wage-vs { grid-template-columns: 1fr; }
+    .wage-vs-sep { display: none; }
+  }
+
+  .wage-side {
+    background: var(--dark-surface);
+    border: 1px solid #1c1c1c;
+    padding: 2.5rem 2rem;
+    text-align: center;
+  }
+
+  .wage-side.left { border-left: 3px solid var(--accent-gold); }
+  .wage-side.right { border-left: 3px solid var(--red); }
+
+  .wage-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .wage-amount {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .wage-side.left .wage-amount { color: var(--accent-gold); }
+  .wage-side.right .wage-amount { color: var(--red); }
+
+  .wage-desc {
+    font-size: 0.85rem;
+    color: var(--gray-light);
+    line-height: 1.6;
+  }
+
+  .wage-vs-sep {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-style: italic;
+    color: #333;
+  }
+
+  .wage-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
+    font-style: italic;
+    color: var(--off-white);
+    line-height: 1.8;
+    max-width: 700px;
+    margin: 0 auto 1rem;
+  }
+
+  .wage-statement strong { color: var(--red); font-style: normal; font-weight: 900; }
+
+  .wage-multiplier {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-top: 1rem;
+  }
+
+  .wage-multiplier span {
+    color: var(--red);
+    font-size: 1.4rem;
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: 0;
+  }
+
+  /* TRANSPARENCY DEMAND */
+  .demand-section {
+    padding: 6rem 2rem;
+    background: var(--dark-surface);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .demand-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 100%, rgba(192,57,43,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .demand-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 15vw, 12rem);
+    font-weight: 900;
+    color: var(--red);
+    line-height: 0.9;
+    opacity: 0.15;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    white-space: nowrap;
+  }
+
+  .demand-content {
+    position: relative;
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .demand-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 900;
+    color: var(--white);
+    line-height: 1.15;
+    margin-bottom: 1.5rem;
+  }
+
+  .demand-title em { color: var(--red); }
+
+  .demand-body {
+    font-size: 1rem;
+    color: var(--off-white);
+    line-height: 1.8;
+    margin-bottom: 2rem;
+  }
+
+  /* FOOTER */
+  footer {
+    background: #050505;
+    border-top: 1px solid #1a1a1a;
+    padding: 4rem 2rem 2rem;
+    text-align: center;
+  }
+
+  .footer-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    color: var(--red);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .footer-statement {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.1rem, 3vw, 2rem);
+    font-weight: 700;
+    color: var(--white);
+    line-height: 1.5;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+  }
+
+  .footer-statement em { color: var(--red); font-style: italic; }
+
+  .footer-pillars {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+
+  .footer-pillar {
+    border: 1px solid #222;
+    padding: 0.8rem 1.5rem;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    transition: all 0.3s;
+  }
+
+  .footer-pillar:hover {
+    border-color: var(--red);
+    color: var(--red);
+  }
+
+  .footer-base {
+    padding-top: 2rem;
+    border-top: 1px solid #111;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: #333;
+    line-height: 2;
+  }
+
+  .footer-base a { color: #555; text-decoration: none; }
+  .footer-base a:hover { color: var(--red); }
+
+  /* ANIMATIONS */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* PULSE DOT */
+  .pulse-dot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: var(--red);
+    border-radius: 50%;
+    margin-right: 0.5rem;
+    animation: pulse-anim 1.5s ease-in-out infinite;
+  }
+
+  @keyframes pulse-anim {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.7); }
+  }
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--dark); }
+  ::-webkit-scrollbar-thumb { background: #2a2a2a; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .comparison-grid { grid-template-columns: 1fr; }
+    .what-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .what-grid { grid-template-columns: 1fr; }
+    .burn-rate-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- INTRO OVERLAY -->
+<div id="intro">
+  <div class="intro-slide" id="slide-1">
+    <div class="slide-date">April 15, 2026 — House of Representatives, Philippines</div>
+    <p class="slide-headline">
+      On <em>April 15, 2026</em>, Ramil L. Madriaga's supplemental affidavit claimed that <em>₱125,000,000.00</em> worth of Confidential Funds by Vice President Sara Z. Duterte was disposed within <em>24 hours.</em>
+    </p>
+    <p class="slide-sub">Sworn affidavit · Justice Committee Hearing · House of Representatives</p>
+  </div>
+
+  <div class="intro-slide" id="slide-2">
+    <div class="slide-date">₱125,000,000.00 — Gone in 24 Hours</div>
+    <div class="amount-display">₱125M</div>
+    <p class="slide-headline light">
+      Confidential. Unaccounted. Disposed.
+    </p>
+    <p class="slide-sub light">This is the money of the Filipino people.</p>
+  </div>
+
+  <div class="intro-slide" id="slide-3">
+    <p class="message">
+      This is how much it costs<br><strong>the Filipino people.</strong>
+    </p>
+  </div>
+</div>
+
+<button class="skip-btn" id="skip-btn" onclick="skipIntro()">Skip Intro ▸</button>
+
+<!-- MAIN SITE -->
+<div id="main-site">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="header-eyebrow"><span class="pulse-dot"></span>Public Accountability Visualization · Philippines · 2026</div>
+    <h1 class="header-title">₱125,000,000<br><span>in 24 Hours</span></h1>
+    <p class="header-sub">What could ₱125 Million do for the Filipino people — and what it means that it was allegedly spent in a single day.</p>
+    <div class="header-divider"></div>
+  </header>
+
+  <!-- TICKER -->
+  <div class="ticker-bar">
+    <div class="ticker-track" id="ticker">
+      <span class="ticker-item">₱125 Million disposed in 24 hours</span>
+      <span class="ticker-item">Confidential funds — no public audit</span>
+      <span class="ticker-item">Average Filipino earns ₱500/day</span>
+      <span class="ticker-item">125,000,000 ÷ 500 = 250,000 days of Filipino labor</span>
+      <span class="ticker-item">Madriaga Supplemental Affidavit · April 15, 2026</span>
+      <span class="ticker-item">Accountability is not optional</span>
+      <span class="ticker-item">₱125 Million disposed in 24 hours</span>
+      <span class="ticker-item">Confidential funds — no public audit</span>
+      <span class="ticker-item">Average Filipino earns ₱500/day</span>
+      <span class="ticker-item">125,000,000 ÷ 500 = 250,000 days of Filipino labor</span>
+      <span class="ticker-item">Madriaga Supplemental Affidavit · April 15, 2026</span>
+      <span class="ticker-item">Accountability is not optional</span>
+    </div>
+  </div>
+
+  <!-- CONTEXT -->
+  <div class="context-section fade-in">
+    <div class="context-label">The Weight of 125 Million</div>
+    <p class="context-big">
+      A Filipino minimum-wage worker in Metro Manila earns roughly <strong>₱610 per day</strong> — and most regions earn far less. To spend <em>₱125 Million in a single day</em> is to spend what <strong>204,918 workers</strong> earn in a full day of honest labor — every bus driver, every market vendor, every nurse, every teacher.
+    </p>
+  </div>
+
+  <!-- BURN CLOCK -->
+  <section class="clock-section">
+    <div class="clock-inner fade-in">
+      <div class="context-label" style="justify-content:center; margin-bottom:1rem;">If ₱125M was spent in exactly 24 hours</div>
+      <h2 class="clock-title">The Spending Clock</h2>
+      <div class="clock-sub">Money burned every second</div>
+      <div class="clock-display" id="peso-counter">₱0</div>
+      <p class="per-second">Every <strong>1 second</strong>, <strong id="per-sec">₱1,446</strong> in public funds — gone.</p>
+
+      <div class="burn-rate-grid">
+        <div class="burn-cell">
+          <div class="burn-label">Per Second</div>
+          <div class="burn-value">₱1,447</div>
+        </div>
+        <div class="burn-cell">
+          <div class="burn-label">Per Minute</div>
+          <div class="burn-value">₱86,806</div>
+        </div>
+        <div class="burn-cell">
+          <div class="burn-label">Per Hour</div>
+          <div class="burn-value">₱5,208,333</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON CARDS -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-label fade-in">The Filipino's Daily Reality</div>
+      <h2 class="section-title fade-in">What a Filipino Spends in a <em>Day</em></h2>
+
+      <div class="comparison-grid">
+        <div class="comp-card fade-in">
+          <span class="comp-icon">🍚</span>
+          <div class="comp-item">Daily Meals for a Family</div>
+          <div class="comp-cost">₱200 – ₱350</div>
+          <p class="comp-desc">A family of four eating basic Filipino meals — rice, ulam, vegetables — budgets around ₱200–350 per day.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M feeds</div>
+          <div class="comp-reach">357,000 – 625,000 Filipino families for one full day</div>
+        </div>
+
+        <div class="comp-card fade-in">
+          <span class="comp-icon">🚌</span>
+          <div class="comp-item">Daily Commute (Jeepney / Bus)</div>
+          <div class="comp-cost">₱50 – ₱120</div>
+          <p class="comp-desc">A worker commuting in Metro Manila spends ₱50–120 daily on jeepney or bus fare alone, not counting MRT.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M pays the commute of</div>
+          <div class="comp-reach">Over 1 Million workers for an entire day</div>
+        </div>
+
+        <div class="comp-card fade-in">
+          <span class="comp-icon">💊</span>
+          <div class="comp-item">Daily Medicine (Maintenance)</div>
+          <div class="comp-cost">₱30 – ₱200</div>
+          <p class="comp-desc">Many Filipinos with hypertension or diabetes spend ₱30–200 per day on maintenance medication — often skipped when money is tight.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M buys daily medicine for</div>
+          <div class="comp-reach">625,000 – 4 Million patients for one day</div>
+        </div>
+
+        <div class="comp-card fade-in">
+          <span class="comp-icon">🏫</span>
+          <div class="comp-item">Child's School Allowance</div>
+          <div class="comp-cost">₱20 – ₱60</div>
+          <p class="comp-desc">Parents give their children ₱20–60 for school allowance daily — sometimes less in far-flung provinces.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M gives allowance to</div>
+          <div class="comp-reach">2 Million – 6.25 Million schoolchildren</div>
+        </div>
+
+        <div class="comp-card fade-in">
+          <span class="comp-icon">💡</span>
+          <div class="comp-item">Monthly Electricity Bill</div>
+          <div class="comp-cost">₱800 – ₱2,500 / mo.</div>
+          <p class="comp-desc">Low-income households pay ₱800–1,500 per month — roughly ₱27–83 per day — for electricity.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M pays electricity bills of</div>
+          <div class="comp-reach">50,000 – 156,000 households for a full month</div>
+        </div>
+
+        <div class="comp-card fade-in">
+          <span class="comp-icon">🏠</span>
+          <div class="comp-item">Monthly Rent (Informal Housing)</div>
+          <div class="comp-cost">₱1,500 – ₱4,000 / mo.</div>
+          <p class="comp-desc">Many urban poor families rent cramped single-room homes in urban slums for ₱1,500–4,000 a month.</p>
+          <div class="comp-divider"></div>
+          <div class="comp-reach-label">₱125M covers rent for</div>
+          <div class="comp-reach">31,000 – 83,000 families for an entire month</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PEOPLE VISUALIZATION -->
+  <section class="people-section">
+    <div class="people-inner">
+      <div class="section-label fade-in">Lives Behind the Number</div>
+      <h2 class="section-title fade-in">₱125 Million, <em>Visualized in People</em></h2>
+      <div class="people-intro fade-in">
+        <p>Each bar below represents ₱125 Million as a proportion of what it could have provided to real Filipinos — today, tomorrow, for years.</p>
+      </div>
+
+      <div class="vis-block fade-in" data-width="100">
+        <div class="vis-header">
+          <div class="vis-name">Daily wages of 250,000 Filipino workers</div>
+          <div class="vis-amount">₱500/day average outside NCR</div>
+        </div>
+        <div class="vis-bar-wrap"><div class="vis-bar-fill" style="width:0%" data-target="100"></div></div>
+        <p class="vis-description">At ₱500 average daily wage outside Metro Manila, ₱125M represents <strong>250,000 days of labor</strong> — the combined daily earnings of every worker in a mid-sized city.</p>
+      </div>
+
+      <div class="vis-block fade-in" data-width="78">
+        <div class="vis-header">
+          <div class="vis-name">Full monthly salary of 27,000 public school teachers</div>
+          <div class="vis-amount">Teacher Salary Grade 11 = ₱27,000 – ₱31,000/mo</div>
+        </div>
+        <div class="vis-bar-wrap"><div class="vis-bar-fill partial" style="width:0%" data-target="78"></div></div>
+        <p class="vis-description">₱125M could pay the <strong>full monthly salary</strong> of approximately 4,600 public school teachers — the teachers who educate the next generation of Filipinos.</p>
+      </div>
+
+      <div class="vis-block fade-in" data-width="62">
+        <div class="vis-header">
+          <div class="vis-name">Free meals for 1.25 Million students — one full day</div>
+          <div class="vis-amount">Dep-Ed feeding program: ₱100/child/day</div>
+        </div>
+        <div class="vis-bar-wrap"><div class="vis-bar-fill" style="width:0%" data-target="62"></div></div>
+        <p class="vis-description">The government's school feeding program costs roughly ₱100 per child per day. ₱125M could feed <strong>1.25 Million undernourished schoolchildren</strong> for an entire day.</p>
+      </div>
+
+      <div class="vis-block fade-in" data-width="45">
+        <div class="vis-header">
+          <div class="vis-name">6 months of Philhealth coverage for 41,000 indigent families</div>
+          <div class="vis-amount">₱3,000/yr per family — ₱250/month</div>
+        </div>
+        <div class="vis-bar-wrap"><div class="vis-bar-fill partial" style="width:0%" data-target="45"></div></div>
+        <p class="vis-description">₱125M could cover <strong>PhilHealth premiums</strong> for over 41,000 poor families for a full year — giving them access to hospital care they otherwise cannot afford.</p>
+      </div>
+
+      <div class="vis-block fade-in" data-width="33">
+        <div class="vis-header">
+          <div class="vis-name">Potable water systems for 125 barangays</div>
+          <div class="vis-amount">~₱1M per barangay water system</div>
+        </div>
+        <div class="vis-bar-wrap"><div class="vis-bar-fill" style="width:0%" data-target="33"></div></div>
+        <p class="vis-description">A simple community water system for a rural barangay costs approximately ₱1 Million. ₱125M could build <strong>clean water access for 125 communities</strong> — thousands of Filipinos who currently carry water by hand.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RED QUOTE -->
+  <div class="quote-section">
+    <p class="quote-text">"Spending ₱125 Million in a single day means spending what 250,000 Filipinos earn in one full day of work — all of it, in 24 hours, with no public accounting."</p>
+    <p class="quote-attr">₱125,000,000 ÷ 24 hours = ₱5,208,333 per hour · This is your money.</p>
+  </div>
+
+  <!-- WHAT COULD HAVE BEEN -->
+  <section class="what-section">
+    <div class="what-inner">
+      <div class="section-label fade-in">What ₱125 Million Could Have Built</div>
+      <h2 class="section-title fade-in">Instead of Disappearing in <em>24 Hours</em></h2>
+
+      <div class="what-grid">
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🏥</div>
+            <div class="what-title">Rural Health Units</div>
+          </div>
+          <div class="what-count">25</div>
+          <div class="what-unit">fully-equipped RHUs</div>
+          <p class="what-note">At ~₱5M per Rural Health Unit, 25 communities could finally have accessible primary healthcare.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🏫</div>
+            <div class="what-title">Classroom Construction</div>
+          </div>
+          <div class="what-count">500</div>
+          <div class="what-unit">public school classrooms</div>
+          <p class="what-note">At ₱250,000 per classroom (DepEd standard), 500 classrooms could replace crumbling makeshift schools.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🎓</div>
+            <div class="what-title">College Scholarships</div>
+          </div>
+          <div class="what-count">5,000</div>
+          <div class="what-unit">4-year full scholarships</div>
+          <p class="what-note">At ₱25,000/year, ₱125M funds 5,000 students through 4 years of college — a generation of professionals.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">💉</div>
+            <div class="what-title">Free Vaccines</div>
+          </div>
+          <div class="what-count">416,667</div>
+          <div class="what-unit">children vaccinated</div>
+          <p class="what-note">At ₱300/dose, ₱125M vaccinates 416,000 children against preventable disease.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🌾</div>
+            <div class="what-title">Farming Subsidies</div>
+          </div>
+          <div class="what-count">12,500</div>
+          <div class="what-unit">smallholder farmers assisted</div>
+          <p class="what-note">At ₱10,000 per farmer, this covers seeds, fertilizer, and tools for 12,500 Filipino farmers for a full season.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🚰</div>
+            <div class="what-title">Clean Water Access</div>
+          </div>
+          <div class="what-count">125</div>
+          <div class="what-unit">community water systems</div>
+          <p class="what-note">₱125M builds 125 potable water systems, giving thousands of Filipinos safe drinking water for the first time.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">🛣️</div>
+            <div class="what-title">Farm-to-Market Roads</div>
+          </div>
+          <div class="what-count">12.5 km</div>
+          <div class="what-unit">of paved road</div>
+          <p class="what-note">At ~₱10M/km for rural road paving, ₱125M builds 12.5 km connecting isolated communities to markets.</p>
+        </div>
+
+        <div class="what-card fade-in">
+          <div class="what-card-top">
+            <div class="what-emoji">👴</div>
+            <div class="what-title">Senior Citizen Pensions</div>
+          </div>
+          <div class="what-count">41,667</div>
+          <div class="what-unit">seniors paid for one month</div>
+          <p class="what-note">At ₱3,000/month per indigent senior, ₱125M covers one month's pension for over 41,000 elderly Filipinos.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY WAGE VS -->
+  <section class="wage-section">
+    <div class="wage-inner fade-in">
+      <div class="context-label" style="text-align:center; display:block; margin-bottom:2rem;">The Human Scale of This Number</div>
+      <h2 class="section-title" style="text-align:center; margin-bottom:0;">You vs. <em>₱125 Million/day</em></h2>
+
+      <div class="wage-vs">
+        <div class="wage-side left">
+          <div class="wage-label">Average Filipino Daily Wage</div>
+          <div class="wage-amount">₱500</div>
+          <div class="wage-desc">Outside NCR. A full day of physical labor, teaching, driving, nursing — honest work.</div>
+        </div>
+        <div class="wage-vs-sep">vs.</div>
+        <div class="wage-side right">
+          <div class="wage-label">Confidential Fund Burn Rate</div>
+          <div class="wage-amount">₱1,447 / sec</div>
+          <div class="wage-desc">Every single second of that 24-hour period, ₱1,447 of public money was allegedly being disposed.</div>
+        </div>
+      </div>
+
+      <p class="wage-statement">
+        In the time it takes a Filipino worker to earn their daily wage of ₱500 — 8 hours of labor — this money was burning at <strong>₱41,666,667</strong>.
+      </p>
+
+      <div class="wage-multiplier">
+        That is <span>83,333×</span> the daily wage of a Filipino worker — in a single 8-hour shift.
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMAND -->
+  <section class="demand-section">
+    <div class="demand-bg"></div>
+    <div class="demand-num">₱125M</div>
+    <div class="demand-content fade-in">
+      <div class="context-label" style="justify-content:center; display:flex; margin-bottom:1.5rem;"><span class="pulse-dot"></span>This Demands an Answer</div>
+      <h2 class="demand-title">Where did the money<br><em>actually go?</em></h2>
+      <p class="demand-body">
+        Confidential funds are meant to serve the security of the nation. They are not meant to disappear in 24 hours with no accounting, no receipts, and no public transparency. The Filipino people — who earned this money through taxes paid on every jeepney ride, every kilo of rice, every day of work — deserve a full accounting.
+      </p>
+      <p class="demand-body">
+        ₱125 Million is not an abstraction. It is 250,000 days of Filipino labor. It is 1.25 million fed children. It is 125 communities with clean water. It is real lives, real futures — and it is gone.
+      </p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-eyebrow">Do Not Look Away</div>
+    <p class="footer-statement">
+      Democracy requires <em>witnesses.</em> Stay informed. Stay loud. <em>Do not turn a blind eye.</em>
+    </p>
+
+    <div class="footer-pillars">
+      <div class="footer-pillar">Watch the hearings</div>
+      <div class="footer-pillar">Read the sworn affidavits</div>
+      <div class="footer-pillar">Demand audit transparency</div>
+      <div class="footer-pillar">Talk to your neighbors</div>
+      <div class="footer-pillar">Register and vote</div>
+      <div class="footer-pillar">Hold power accountable</div>
+    </div>
+
+    <div class="footer-base">
+      <p>This is a public interest visualization. All figures are based on publicly available data on Philippine wages, government service costs, and DepEd/DOH program benchmarks.</p>
+      <p style="margin-top:0.5rem;">Source: Madriaga Supplemental Affidavit · House of Representatives Justice Committee Hearing · April 15, 2026</p>
+      <p style="margin-top:1.5rem; color: #222;">"The price of apathy towards public affairs is to be ruled by evil men." — Plato</p>
+    </div>
+  </footer>
+
+</div><!-- end main-site -->
+
+<script>
+  // ── INTRO SEQUENCE ──
+  const slides = ['slide-1', 'slide-2', 'slide-3'];
+  let current = 0;
+  const skipBtn = document.getElementById('skip-btn');
+
+  function showSlide(i) {
+    slides.forEach((id, idx) => {
+      const el = document.getElementById(id);
+      el.classList.toggle('active', idx === i);
+    });
+  }
+
+  function nextSlide() {
+    current++;
+    if (current < slides.length) {
+      showSlide(current);
+      const duration = current === 2 ? 3200 : 3500;
+      setTimeout(() => {
+        if (current === slides.length - 1) {
+          setTimeout(launchSite, 2800);
+        } else {
+          nextSlide();
+        }
+      }, duration);
+    }
+  }
+
+  function launchSite() {
+    const intro = document.getElementById('intro');
+    skipBtn.style.display = 'none';
+    intro.style.transition = 'opacity 1s ease';
+    intro.style.opacity = '0';
+    setTimeout(() => {
+      intro.style.display = 'none';
+      const site = document.getElementById('main-site');
+      site.style.display = 'block';
+      site.style.opacity = '0';
+      site.style.transition = 'opacity 0.8s ease';
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => { site.style.opacity = '1'; });
+      });
+      initSite();
+    }, 1000);
+  }
+
+  function skipIntro() {
+    launchSite();
+  }
+
+  // Start intro
+  showSlide(0);
+  setTimeout(() => {
+    skipBtn.classList.add('visible');
+    nextSlide();
+  }, 5000);
+
+  // ── SITE INIT ──
+  function initSite() {
+    initClock();
+    initScrollAnimations();
+    initBarAnimations();
+  }
+
+  // Counting clock
+  function initClock() {
+    const el = document.getElementById('peso-counter');
+    let start = null;
+    const duration = 6000; // 6 seconds to count up
+    const target = 125000000;
+
+    function formatPeso(n) {
+      return '₱' + Math.floor(n).toLocaleString('en-PH');
+    }
+
+    function step(timestamp) {
+      if (!start) start = timestamp;
+      const progress = Math.min((timestamp - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatPeso(target * eased);
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      } else {
+        el.textContent = '₱125,000,000';
+        // Start live ticker after
+        startLiveTicker();
+      }
+    }
+
+    // Observe clock section
+    const clockSection = document.querySelector('.clock-section');
+    const obs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        requestAnimationFrame(step);
+        obs.disconnect();
+      }
+    }, { threshold: 0.3 });
+    obs.observe(clockSection);
+  }
+
+  // After counting, show live "spending" ticker
+  function startLiveTicker() {
+    const el = document.getElementById('peso-counter');
+    let spent = 0;
+    const perSecond = 1446.759; // 125M / 86400
+    const startTime = Date.now();
+
+    function update() {
+      spent = (Date.now() - startTime) / 1000 * perSecond;
+      el.textContent = '₱' + spent.toFixed(2);
+      requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // Scroll-triggered fade-ins
+  function initScrollAnimations() {
+    const fadeEls = document.querySelectorAll('.fade-in');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+
+    fadeEls.forEach(el => obs.observe(el));
+  }
+
+  // Bar animations
+  function initBarAnimations() {
+    const bars = document.querySelectorAll('.vis-bar-fill');
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const target = e.target.dataset.target || '100';
+          setTimeout(() => {
+            e.target.style.width = target + '%';
+          }, 300);
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+
+    bars.forEach(bar => obs.observe(bar));
+
+    // vis-block underline
+    const visBlocks = document.querySelectorAll('.vis-block');
+    const obs2 = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.4 });
+    visBlocks.forEach(b => obs2.observe(b));
+  }
+</script>
+</body>
+</html>
